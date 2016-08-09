@@ -1,0 +1,46 @@
+class PetsController < ApplicationController
+
+  get '/pets' do
+    @pets = Pet.all
+    erb :'/pets/index' 
+  end
+
+  get '/pets/new' do 
+    erb :'/pets/new'
+  end
+
+  post '/pets' do 
+    @pet = Pet.create(params[:pet])   
+    bindin.pry
+    @owner = Owner.find(params[:owner_id])
+    @pet.owner_id = @owner.id
+    # if !params["owner_name"].empty? && !params[:owner_id].empty?
+    #   @owner_1 = Owner.create(name: params["owner_name"])
+    #   @owner_1.pets << @pet
+    #   @pet.owner_id = @owner_1.id
+     
+    #   params[:owner_id].each do |owner_id|
+    #     @owner = Owner.find(owner_id)
+    #     @owner.pets << @pet
+    #     @pet.owner_id = @owner.id
+    #   end 
+    # elsif !params["owner_name"].empty? && params[:owner_id].empty? 
+    #   @owner_1 = Owner.create(name: params["owner_name"])
+    #   @owner_1.pets << @pet
+    #   @pet.owner_id = @owner_1.id
+    # end
+    redirect to "pets/#{@pet.id}"
+  end
+
+  get '/pets/:id' do 
+    @pet = Pet.find(params[:id])
+    erb :'/pets/show'
+  end
+
+  post '/pets/:id' do 
+
+    redirect to "pets/#{@pet.id}"
+  end
+end
+
+
